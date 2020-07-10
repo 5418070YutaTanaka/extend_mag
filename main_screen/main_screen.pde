@@ -3,34 +3,49 @@
 class Player {
   Player enemy;
   int lifepoint = 10;
+  String name;
   ActionCommand NextAction = null;
 }
 
 interface ActionCommand {
-  
   void Action(Player player); // 選択したときにおこる行動を指定。
+  String getName();
 }
 class AttackAction implements ActionCommand {
   int AttackPoint = int(random(3)) + 4;
+  String getName(){
+    return "AttackAction";
+  }
   void Action(Player player){
     player.enemy.lifepoint -= AttackPoint;
   }
 }
 class DeffenceAction implements ActionCommand {
+  String name = "DeffenceAction";
   void Action(Player player){
+  }
+  String getName(){
+    return "DeffenceAction";
   }
 }
 class HealAction implements ActionCommand {
   int healpoint = int(random(3)) + 2;
+  public String name = "HealAction";
   void Action(Player player){
     player.lifepoint += healpoint;
+  }
+  String getName(){
+    return "HealAction";
   }
 }
 class CalcDamage{
   void display(){
-    update();
     DrawCharactor(200,500);
     DrawCharactor(1000,500);
+    fill(0);
+    text(player1.NextAction.getName(), width/4, height * 3/4);
+    text(player2.NextAction.getName(), width * 3/4, height * 3/4);
+    update();
     
   }
   void DrawCharactor(int x, int y ){
@@ -43,7 +58,7 @@ class CalcDamage{
   }
   void update(){
     fill(0);
-    text("next turn to press any key", width/2, height/2);
+    text("next turn to press h", width/2, height/2);
     if(keyPressed && key == 'h') {
         Gameflow = "main";
         player1.NextAction = null;
@@ -106,11 +121,6 @@ class MainScreen{
     }
   }
 }
-class Player {
-  Player enemy;
-  int lifepoint = 10;
-  ActionCommand NextAction = null;
-}
 
 MainScreen main = new MainScreen();
 CalcDamage calcdamage = new CalcDamage();
@@ -119,7 +129,6 @@ Player player2 = new Player();
 String Gameflow = "main";
 void setup(){
   size(1600,1200);
-
 }
 void draw(){
   background(255);
