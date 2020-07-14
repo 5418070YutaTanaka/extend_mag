@@ -3,16 +3,34 @@
 class Player {
   Player enemy;
   int lifepoint = 10;
-  String name;
   ActionCommand NextAction = null;
+  ActionCommand getAction(){
+    return NextAction;
+  }
+  void printA(){
+    println("A");
+  }
+  void setenemy(Player e){
+    enemy = e;
+  }
+  void action(){
+    NextAction.Action(this);
+  }
 }
 
-interface ActionCommand {
-  void Action(Player player); // 選択したときにおこる行動を指定。
-  String getName();
+abstract class ActionCommand {
+  int priority;
+  String name;
+  abstract void Action(Player player); // 選択したときにおこる行動を指定。
+  abstract String getName();
+  int getPriority(){
+    return priority;
+  }
+  
 }
-class AttackAction implements ActionCommand {
+class AttackAction extends ActionCommand {
   int AttackPoint = int(random(3)) + 4;
+  int priority = 10;
   String getName(){
     return "AttackAction";
   }
@@ -20,16 +38,18 @@ class AttackAction implements ActionCommand {
     player.enemy.lifepoint -= AttackPoint;
   }
 }
-class DeffenceAction implements ActionCommand {
+class DeffenceAction extends ActionCommand {
   String name = "DeffenceAction";
+  int priority = 30;
   void Action(Player player){
   }
   String getName(){
     return "DeffenceAction";
   }
 }
-class HealAction implements ActionCommand {
+class HealAction extends ActionCommand {
   int healpoint = int(random(3)) + 2;
+  int priority = 50;
   public String name = "HealAction";
   void Action(Player player){
     player.lifepoint += healpoint;
@@ -37,16 +57,87 @@ class HealAction implements ActionCommand {
   String getName(){
     return "HealAction";
   }
+
 }
 class CalcDamage{
+  boolean calc_finished = false;
   void display(){
     DrawCharactor(200,500);
     DrawCharactor(1000,500);
+    DrawHeart(71, 50, player1.lifepoint);
+    DrawLifePoint(70,100,player1.lifepoint, 1);
+    DrawHeart(1360, 50, player2.lifepoint);
+    DrawLifePoint(750,100,player2.lifepoint, 2);
     fill(0);
     text(player1.NextAction.getName(), width/4, height * 3/4);
     text(player2.NextAction.getName(), width * 3/4, height * 3/4);
     update();
-    
+  }
+  //指定した位置にハートとライフを表示する
+  void DrawHeart(int X, int Y, int life){
+    int R = 3;
+    float x;
+    float y;
+    fill(255);
+    strokeWeight(2);
+    stroke(0);
+    stroke(200, 0, 0);
+    strokeJoin(ROUND); //線のつなぎ目について設定
+
+    pushMatrix();
+    translate(X, Y);
+
+    beginShape();
+    for (int theta = 0; theta < 360; theta++) {
+      x = R * (16 * sin(radians(theta)) * sin(radians(theta)) * sin(radians(theta)));
+      y = (-1) * R * (13 * cos(radians(theta)) - 5 * cos(radians(2 * theta)) 
+        - 2 * cos(radians(3 * theta)) - cos(radians(4 * theta)));
+
+      vertex(x, y);
+    }
+    endShape(CLOSE);
+ 
+   popMatrix();
+   fill(0);
+   if(life < 10){
+     text(life, X-9, Y+16);
+   } else {
+     text(life, X-18, Y+16);
+   }
+  }
+  //残りライフバーを表示する（player１は左、player２は右から表示する）git
+  void DrawLifePoint(int x, int y, int life, int player) {
+    int rectX = x + 10;
+    int rectY = y + 10;
+    int life2 = 0;
+    fill(255);;
+    rect(x, y, 610, 150);
+    stroke(0);
+    if(life >= 10){
+      life2 = life % 10;
+      life = 10;
+    }
+    if(player == 1){
+      fill(0,255,0);
+      for(int i = 0; i < life; i++){
+        rect(rectX + 60 * i, rectY, 50, 130);
+      }
+      fill(255, 0, 150);
+      for(int i = 0; i < life2; i++){
+        rect(rectX + 60 * i, rectY, 50, 130);
+      }
+    }
+    if(player == 2){
+      rectX += 540;
+      fill(0,255,0);
+      for(int i = 0; i < life; i++){
+        rect(rectX - 60 * i, rectY, 50, 130);
+      }
+      fill(255, 0, 150);
+      for(int i = 0; i < life2; i++){
+        rect(rectX - 60 * i, rectY, 50, 130);
+      }
+    }
   }
   void DrawCharactor(int x, int y ){
     ellipse(x, y, 50,50);
@@ -58,11 +149,20 @@ class CalcDamage{
   }
   void update(){
     fill(0);
+    calc();
     text("next turn to press h", width/2, height/2);
     if(keyPressed && key == 'h') {
         Gameflow = "main";
         player1.NextAction = null;
         player2.NextAction = null;
+        calc_finished = false;
+    }
+  }
+  void calc(){
+    if (! calc_finished) {
+      calc_finished = true;
+      player1.action();
+      player2.action();
     }
   }
 }
@@ -136,5 +236,6 @@ void draw(){
     main.display();
   }else if (Gameflow == "calc_damage"){
     calcdamage.display();
+    
   }
 }
