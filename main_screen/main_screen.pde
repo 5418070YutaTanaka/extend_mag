@@ -46,7 +46,6 @@ class CalcDamage{
     text(player1.NextAction.getName(), width/4, height * 3/4);
     text(player2.NextAction.getName(), width * 3/4, height * 3/4);
     update();
-    
   }
   void DrawCharactor(int x, int y ){
     ellipse(x, y, 50,50);
