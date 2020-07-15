@@ -1,14 +1,11 @@
 //calcDamageのアニメーションどうしよう
 // これは多分全体で共有した方がいいかも？
 class Player {
-  Player enemy;
+  Player enemy = null;
   int lifepoint = 10;
   ActionCommand NextAction = null;
   ActionCommand getAction(){
     return NextAction;
-  }
-  void printA(){
-    println("A");
   }
   void setenemy(Player e){
     enemy = e;
@@ -26,6 +23,7 @@ abstract class ActionCommand {
   int getPriority(){
     return priority;
   }
+  abstract int getPoint();
   
 }
 class AttackAction extends ActionCommand {
@@ -37,25 +35,40 @@ class AttackAction extends ActionCommand {
   void Action(Player player){
     player.enemy.lifepoint -= AttackPoint;
   }
+  int getPoint(){
+    return AttackPoint;
+  }
 }
 class DeffenceAction extends ActionCommand {
   String name = "DeffenceAction";
   int priority = 30;
   void Action(Player player){
+    if (player.enemy.NextAction.getName() == "AttackAction") {
+      println(player.lifepoint);
+      player.lifepoint += player.enemy.NextAction.getPoint();
+      println(player.lifepoint);
+    }
+    player.lifepoint += 1;
   }
   String getName(){
     return "DeffenceAction";
   }
+  int getPoint(){
+    return -1;
+  }
 }
 class HealAction extends ActionCommand {
-  int healpoint = int(random(3)) + 2;
+  int HealPoint = int(random(3)) + 2;
   int priority = 50;
   public String name = "HealAction";
   void Action(Player player){
-    player.lifepoint += healpoint;
+    player.lifepoint += HealPoint;
   }
   String getName(){
     return "HealAction";
+  }
+  int getPoint(){
+    return HealPoint;
   }
 
 }
@@ -70,7 +83,9 @@ class CalcDamage{
     DrawLifePoint(750,100,player2.lifepoint, 2);
     fill(0);
     text(player1.NextAction.getName(), width/4, height * 3/4);
+    text(player1.NextAction.getPoint(), width/4, height * 3 / 4 + 50) ;
     text(player2.NextAction.getName(), width * 3/4, height * 3/4);
+    text(player2.NextAction.getPoint(), width * 3/4, height * 3 / 4 + 50) ;
     update();
   }
   //指定した位置にハートとライフを表示する
@@ -105,7 +120,7 @@ class CalcDamage{
      text(life, X-18, Y+16);
    }
   }
-  //残りライフバーを表示する（player１は左、player２は右から表示する）git
+  //残りライフバーを表示する（player１は左、player２は右から表示する)
   void DrawLifePoint(int x, int y, int life, int player) {
     int rectX = x + 10;
     int rectY = y + 10;
@@ -226,9 +241,12 @@ MainScreen main = new MainScreen();
 CalcDamage calcdamage = new CalcDamage();
 Player player1 = new Player();
 Player player2 = new Player();
+
 String Gameflow = "main";
 void setup(){
   size(1600,1200);
+  player1.setenemy(player2);
+  player2.setenemy(player1);
 }
 void draw(){
   background(255);
