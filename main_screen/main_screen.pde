@@ -44,9 +44,7 @@ class DeffenceAction extends ActionCommand {
   int priority = 30;
   void Action(Player player){
     if (player.enemy.NextAction.getName() == "AttackAction") {
-      println(player.lifepoint);
       player.lifepoint += player.enemy.NextAction.getPoint();
-      println(player.lifepoint);
     }
     player.lifepoint += 1;
   }
@@ -244,16 +242,17 @@ Player player2 = new Player();
 
 String Gameflow = "main";
 void setup(){
-  size(1600,1200);
+  size(1200,800);
   player1.setenemy(player2);
   player2.setenemy(player1);
 }
 void draw(){
   background(255);
-  if (Gameflow == "main"){
+  if (Gameflow == "rule"){
+    
+  }else if (Gameflow == "main"){
     main.display();
   }else if (Gameflow == "calc_damage"){
     calcdamage.display();
-    
   }
 }
