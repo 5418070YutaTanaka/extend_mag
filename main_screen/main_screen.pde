@@ -244,7 +244,7 @@ Player player2 = new Player();
 
 String Gameflow = "main";
 void setup(){
-  size(1600,1200);
+  size(1200,800);
   player1.setenemy(player2);
   player2.setenemy(player1);
 }
