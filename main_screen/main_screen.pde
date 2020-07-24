@@ -55,7 +55,7 @@ class start{
     }
     
     if(player1Ready && player2Ready){
-      GameFlow = "main";
+      Gameflow = "main";
     }
   }
   
@@ -149,10 +149,10 @@ class CalcDamage{
   void display(){
     DrawCharactor(200,500);
     DrawCharactor(1000,500);
-    DrawHeart(71,50,player1.lifepoint+3);
-    DrawLifePoint(70,100,player1.lifepoint+3,1);
-    DrawHeart(1130,50, player2.lifepoint-5);
-    DrawLifePoint(620,100,player2.lifepoint+5,2);
+    DrawHeart(71,50,player1.lifepoint);
+    DrawLifePoint(70,100,player1.lifepoint,1);
+    DrawHeart(1130,50, player2.lifepoint);
+    DrawLifePoint(620,100,player2.lifepoint,2);
     fill(0);
     text(player1.NextAction.getName(), width/4, height * 3/4);
     text(player1.NextAction.getPoint(), width/4, height * 3 / 4 + 50) ;
@@ -308,13 +308,13 @@ class MainScreen{
     }
   }
 }
-
+start s = new start();
 MainScreen main = new MainScreen();
 CalcDamage calcdamage = new CalcDamage();
 Player player1 = new Player();
 Player player2 = new Player();
 
-String Gameflow = "main";
+String Gameflow = "start";
 void setup(){
   size(1200,800);
   player1.setenemy(player2);
@@ -322,7 +322,9 @@ void setup(){
 }
 void draw(){
   background(255);
-  if (Gameflow == "main"){
+  if (Gameflow == "start"){
+    s.display();
+  }else if (Gameflow == "main"){
     main.display();
   }else if (Gameflow == "calc_damage"){
     calcdamage.display();
