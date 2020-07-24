@@ -1,5 +1,77 @@
 //calcDamageのアニメーションどうしよう
 // これは多分全体で共有した方がいいかも？
+class start{
+  private PFont Englishfont;
+  private PFont Japanesefont; 
+  private boolean player1Ready = false, player2Ready = false;
+  String GameFlow = "start";
+  
+  private void display(){
+    background(255);
+    textAlign( CENTER ); //中央揃え
+    Englishfont = createFont("Arial", 70);//英語
+    Japanesefont = createFont("Meiryo", 100);//日本語
+    
+    textFont(Japanesefont);
+    fill(0);
+    textSize(100);
+    text("ゲームタイトル", width/2, height/4+30);
+    
+    fill(255);
+    strokeWeight(3);
+    rect(width/16+25, height*3/4+42, 50,50);
+    rect(width*9/16+25, height*3/4+42, 50,50);
+    rect(width*5/8-19, 15, 200,70);
+    
+    textSize(40);
+    fill(0);
+    text("スペース　でルール説明", width*7/8-80, height/12);
+    text("a  を押して準備完了", width/4, height*3/4+80);
+    text("j  を押して準備完了", width*3/4, height*3/4+80);
+    
+    textFont(Englishfont); 
+    textSize(70);
+    text("player1", width/4, height/2);
+    text("player2", width*3/4, height/2);
+    
+    if(keyPressed){
+      keyPressed();
+    }
+    
+    textSize(100);
+    if(player1Ready){
+      fill(255,0,0);
+      text("OK", width/4, height*3/4-40);
+    } else {
+      fill(0,0,255);
+      text("wait", width/4, height*3/4-40);
+    }
+    if(player2Ready){
+      fill(255,0,0);
+      text("OK", width*3/4, height*3/4-50);
+    } else {
+      fill(0,0,255);
+      text("wait", width*3/4, height*3/4-50);
+    }
+    
+    if(player1Ready && player2Ready){
+      GameFlow = "main";
+    }
+  }
+  
+    
+  private void keyPressed(){
+    if(key == 'a'){//キーボードでaを入力をしたら実行される
+      player1Ready = true;
+    }
+    if(key == 'j'){//キーボードでjを入力をしたら実行される
+      player2Ready = true;
+    }
+    if(key == ' '){//キーボードでスペースを入力したら実行される
+      GameFlow = "rule";
+    }
+  }
+}
 class Player {
   Player enemy = null;
   int lifepoint = 10;
@@ -77,10 +149,10 @@ class CalcDamage{
   void display(){
     DrawCharactor(200,500);
     DrawCharactor(1000,500);
-    DrawHeart(71, 50, player1.lifepoint);
-    DrawLifePoint(70,100,player1.lifepoint, 1);
-    DrawHeart(1360, 50, player2.lifepoint);
-    DrawLifePoint(750,100,player2.lifepoint, 2);
+    DrawHeart(71,50,player1.lifepoint+3);
+    DrawLifePoint(70,100,player1.lifepoint+3,1);
+    DrawHeart(1130,50, player2.lifepoint-5);
+    DrawLifePoint(620,100,player2.lifepoint+5,2);
     fill(0);
     text(player1.NextAction.getName(), width/4, height * 3/4);
     text(player1.NextAction.getPoint(), width/4, height * 3 / 4 + 50) ;
@@ -122,11 +194,11 @@ class CalcDamage{
   }
   //残りライフバーを表示する（player１は左、player２は右から表示する)
   void DrawLifePoint(int x, int y, int life, int player) {
-    int rectX = x + 10;
-    int rectY = y + 10;
+    int rectX = x + 8;
+    int rectY = y + 8;
     int life2 = 0;
     fill(255);;
-    rect(x, y, 610, 150);
+    rect(x, y, 510, 130);
     stroke(0);
     if(life >= 10){
       life2 = life % 10;
@@ -135,22 +207,22 @@ class CalcDamage{
     if(player == 1){
       fill(0,255,0);
       for(int i = 0; i < life; i++){
-        rect(rectX + 60 * i, rectY, 50, 130);
+        rect(rectX + 50 * i, rectY, 44, 114);
       }
       fill(255, 0, 150);
       for(int i = 0; i < life2; i++){
-        rect(rectX + 60 * i, rectY, 50, 130);
+        rect(rectX + 50 * i, rectY, 44, 114);
       }
     }
     if(player == 2){
-      rectX += 540;
+      rectX += 450;
       fill(0,255,0);
       for(int i = 0; i < life; i++){
-        rect(rectX - 60 * i, rectY, 50, 130);
+        rect(rectX - 50 * i, rectY, 44, 114);
       }
       fill(255, 0, 150);
       for(int i = 0; i < life2; i++){
-        rect(rectX - 60 * i, rectY, 50, 130);
+        rect(rectX - 50 * i, rectY, 44, 114);
       }
     }
   }
@@ -254,6 +326,5 @@ void draw(){
     main.display();
   }else if (Gameflow == "calc_damage"){
     calcdamage.display();
-    
   }
 }
