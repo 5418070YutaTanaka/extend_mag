@@ -2,7 +2,10 @@
 // これは多分全体で共有した方がいいかも？
 PImage img_player1;
 PImage img_player2;
+PFont Japanfont, Englishfont;
 PImage action;
+
+
 class Player {
   Player enemy;
   int lifepoint = 10;
@@ -69,8 +72,8 @@ class CalcDamage {
   void display() {
     img_player1 = loadImage("player1.png");
     img_player2 = loadImage("player2.png");
-    DrawCharactor(200, 500, img_player1);
-    DrawCharactor(1000, 500, img_player2);
+    DrawCharactor(width/6, 500, img_player1);
+    DrawCharactor(width*2/3, 500, img_player2);
     DrawHeart(71, 50, player1.lifepoint);
     DrawLifePoint(70, 100, player1.lifepoint, 1);
     DrawHeart(1360, 50, player2.lifepoint);
@@ -232,13 +235,94 @@ class MainScreen {
   }
 }
 
+
+class Result {
+  
+  void display() {
+    player1.lifepoint = 4;
+    if (player1.lifepoint == 0 || player2.lifepoint == 0) {
+      print_ko(player1.lifepoint, player2.lifepoint);
+    } else if (player1.lifepoint == player2.lifepoint) {
+      print_draw(player1.lifepoint, player2.lifepoint);
+    } else {
+      print_judge(player1.lifepoint, player2.lifepoint);
+    }
+    fill(255, 0, 0);
+    textAlign( CENTER ); //中央揃え
+    Englishfont = createFont("Arial", 70);    //英語
+    Japanfont = createFont("Meiryo", 100);  //日本語 
+    rect(width/2-113, height/2+182, 20, 20);
+    fill(0);
+    textSize(20);
+
+    text("b press to back home ", width/2, height/2+height/4) ;
+    /*if (keyPressed){
+      if(key == 'b'){
+        Gameflow = Start;
+      }
+    }*/
+  }
+
+
+
+
+  void print_ko(int player1, int player2) {
+    fill(255, 0, 0);
+    textSize(300);
+    text("KO!", width/2, height/2-60);
+    textSize(200);
+    textAlign( CENTER ); //中央揃え
+    Englishfont = createFont("Arial", 70);    //英語
+    Japanfont = createFont("Meiryo", 100);  //日本語 
+    if (player1 > player2) {
+      text("player1 WIN", width/2, height/2+100);
+    } else {
+      text("player2 WIN", width/2, height/2+100);
+    }
+  }
+
+
+  void print_judge(int player1, int player2) {
+    fill(255, 0, 0);
+    textSize(100);
+    textAlign( CENTER ); //中央揃え
+    Englishfont = createFont("Arial", 70);    //英語
+    Japanfont = createFont("Meiryo", 100);  //日本語 
+    String s = player1 + "-" + player2;
+    text(s, width/2, height/2-60);
+    textSize(200);
+
+    if (player1 > player2) {
+      text("player1 WIN", width/2, height/2+100);
+    } else {
+      text("player2 WIN", width/2, height/2+100);
+    }
+  }
+
+
+  void print_draw(int player1, int player2) {
+    fill(255, 0, 0);
+    textSize(100);
+    Englishfont = createFont("Arial", 70);    //英語
+    Japanfont = createFont("Meiryo", 100);  //日本語 
+    textAlign( CENTER ); //中央揃え
+    String s = player1 + "-" + player2;
+    text(s, width/2, height/2-60);
+    textSize(200);
+    text("Draw", width/2, height/2+100);
+  }
+}
+
+
+
 MainScreen main = new MainScreen();
 CalcDamage calcdamage = new CalcDamage();
+Result result = new Result();
 Player player1 = new Player();
 Player player2 = new Player();
-String Gameflow = "main";
+String Gameflow = "result";
 void setup() {
-  size(1600, 1200);
+  size(1200, 800);
 }
 void draw() {
   background(255);
@@ -246,5 +330,7 @@ void draw() {
     main.display();
   } else if (Gameflow == "calc_damage") {
     calcdamage.display();
+  }else if (Gameflow == "result"){
+    result.display();
   }
 }
