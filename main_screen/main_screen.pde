@@ -1,7 +1,6 @@
 //calcDamageのアニメーションどうしよう
 // これは多分全体で共有した方がいいかも？
 class Result {
-  
   void display() {
     player1.lifepoint = 4;
     if (player1.lifepoint <=0 || player2.lifepoint <= 0) {
@@ -23,14 +22,12 @@ class Result {
     if (keyPressed){
       if(key == 'b'){
         Gameflow = "start";
+        player1.lifepoint = 10;
+        player2.lifepoint = 10;
       }
     }
   }
-
-
-
-
-  void print_ko(int player1, int player2) {
+  void print_ko(int player1Life, int player2Life) {
     fill(255, 0, 0);
     textSize(300);
     text("KO!", width/2, height/2-60);
@@ -38,7 +35,7 @@ class Result {
     textAlign( CENTER ); //中央揃え
     Englishfont = createFont("Arial", 70);    //英語
     Japanfont = createFont("Meiryo", 100);  //日本語 
-    if (player1 > player2) {
+    if (player1Life > player2Life) {
       text("player1 WIN", width/2, height/2+100);
     } else {
       text("player2 WIN", width/2, height/2+100);
@@ -46,17 +43,17 @@ class Result {
   }
 
 
-  void print_judge(int player1, int player2) {
+  void print_judge(int player1Life, int player2Life) {
     fill(255, 0, 0);
     textSize(100);
     textAlign( CENTER ); //中央揃え
     Englishfont = createFont("Arial", 70);    //英語
     Japanfont = createFont("Meiryo", 100);  //日本語 
-    String s = player1 + "-" + player2;
+    String s = player1Life + "-" + player2Life;
     text(s, width/2, height/2-60);
     textSize(200);
 
-    if (player1 > player2) {
+    if (player1Life > player2Life) {
       text("player1 WIN", width/2, height/2+100);
     } else {
       text("player2 WIN", width/2, height/2+100);
@@ -132,6 +129,8 @@ class start{
     
     if(player1Ready && player2Ready){
       Gameflow = "main";
+      player1Ready = false;
+      player2Ready = false;
     }
   }
   
@@ -337,7 +336,7 @@ class MainScreen{
     //attack
     textSize(30);
     fill(255);
-    square(100,100,200);
+    rect(100,100,200,200);
     fill(0);
     text("Attack", 110,150);
     text("a", 110, 350);
@@ -345,7 +344,7 @@ class MainScreen{
     
     //deffence
     fill(255);
-    square(500,100,200);
+    rect(500,100,200,200);
     fill(0);
     text("diffence", 510, 150);
     text("s", 510, 350);
@@ -353,7 +352,7 @@ class MainScreen{
     
     //heal
     fill(255);
-    square(900,100,200);
+    rect(900,100,200,200);
     fill(0);
     text("Heal", 910, 150);
     text("d", 910, 350);
