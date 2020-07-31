@@ -1,5 +1,81 @@
 //calcDamageのアニメーションどうしよう
 // これは多分全体で共有した方がいいかも？
+class Result {
+  
+  void display() {
+    player1.lifepoint = 4;
+    if (player1.lifepoint <=0 || player2.lifepoint <= 0) {
+      print_ko(player1.lifepoint, player2.lifepoint);
+    } else if (player1.lifepoint == player2.lifepoint) {
+      print_draw(player1.lifepoint, player2.lifepoint);
+    } else {
+      print_judge(player1.lifepoint, player2.lifepoint);
+    }
+    fill(255, 0, 0);
+    textAlign( CENTER ); //中央揃え
+    Englishfont = createFont("Arial", 70);    //英語
+    Japanfont = createFont("Meiryo", 100);  //日本語 
+    rect(width/2-113, height/2+182, 20, 20);
+    fill(0);
+    textSize(20);
+
+    text("b press to back home ", width/2, height/2+height/4) ;
+    if (keyPressed){
+      if(key == 'b'){
+        Gameflow = "start";
+      }
+    }
+  }
+
+
+
+
+  void print_ko(int player1, int player2) {
+    fill(255, 0, 0);
+    textSize(300);
+    text("KO!", width/2, height/2-60);
+    textSize(200);
+    textAlign( CENTER ); //中央揃え
+    Englishfont = createFont("Arial", 70);    //英語
+    Japanfont = createFont("Meiryo", 100);  //日本語 
+    if (player1 > player2) {
+      text("player1 WIN", width/2, height/2+100);
+    } else {
+      text("player2 WIN", width/2, height/2+100);
+    }
+  }
+
+
+  void print_judge(int player1, int player2) {
+    fill(255, 0, 0);
+    textSize(100);
+    textAlign( CENTER ); //中央揃え
+    Englishfont = createFont("Arial", 70);    //英語
+    Japanfont = createFont("Meiryo", 100);  //日本語 
+    String s = player1 + "-" + player2;
+    text(s, width/2, height/2-60);
+    textSize(200);
+
+    if (player1 > player2) {
+      text("player1 WIN", width/2, height/2+100);
+    } else {
+      text("player2 WIN", width/2, height/2+100);
+    }
+  }
+
+
+  void print_draw(int player1, int player2) {
+    fill(255, 0, 0);
+    textSize(100);
+    Englishfont = createFont("Arial", 70);    //英語
+    Japanfont = createFont("Meiryo", 100);  //日本語 
+    textAlign( CENTER ); //中央揃え
+    String s = player1 + "-" + player2;
+    text(s, width/2, height/2-60);
+    textSize(200);
+    text("Draw", width/2, height/2+100);
+  }
+}
 class start{
   private PFont Englishfont;
   private PFont Japanesefont; 
@@ -232,8 +308,6 @@ class CalcDamage{
     line(x-10,y + 50,x-10,y + 100);
     line(x+10,y + 50,x+10,y + 100);
   }
-  void DrawLifePoint() {
-  }
   void update(){
     fill(0);
     calc();
@@ -250,6 +324,9 @@ class CalcDamage{
       calc_finished = true;
       player1.action();
       player2.action();
+    }
+    if ( player1.lifepoint <= 0 || player2.lifepoint <= 0) {
+      Gameflow = "result";
     }
   }
 }
@@ -313,7 +390,11 @@ MainScreen main = new MainScreen();
 CalcDamage calcdamage = new CalcDamage();
 Player player1 = new Player();
 Player player2 = new Player();
-
+Result result = new Result();
+PImage img_player1;
+PImage img_player2;
+PFont Japanfont, Englishfont;
+PImage action;
 String Gameflow = "start";
 void setup(){
   size(1200,800);
@@ -328,5 +409,8 @@ void draw(){
     main.display();
   }else if (Gameflow == "calc_damage"){
     calcdamage.display();
+  }else if (Gameflow == "result") {
+    result.display();
+    
   }
 }
