@@ -1,6 +1,3 @@
-
-//calcDamageのアニメーションどうしよう
-// これは多分全体で共有した方がいいかも？
 class Result {
   void display() {
     player1.lifepoint = 4;
@@ -22,10 +19,7 @@ class Result {
     text("b press to back home ", width/2, height/2+height/4) ;
     if (keyPressed) {
       if (key == 'b') {
-
-
         delay(50);
-
         Gameflow = "start";
         player1.lifepoint = 10;
         player2.lifepoint = 10;
@@ -133,7 +127,6 @@ class start {
 
     if (player1Ready && player2Ready) {
       delay(50);
-
       Gameflow = "main";
       
       player1Ready = false;
@@ -150,9 +143,7 @@ class start {
       player2Ready = true;
     }
     if (key == 'b') {//キーボードでスペースを入力したら実行される
-
       delay(50);
-
       Gameflow = "rule";
       
     }
@@ -166,78 +157,41 @@ class Rule {
   private PFont Japanesefont; 
   //private PImage img = loadImage("photo.jpg"); 画像持ってくるときに使う
   private int now = 1;
+  private int count=0;
   void display() {
 
     Englishfont = createFont("Arial", 70);//英語
     Japanesefont = createFont("Meiryo", 100);//日本語
 
-
-    Englishfont = createFont("Arial", 70);//英語
-    Japanesefont = createFont("Meiryo", 100);//日本語
-
-
     textAlign( CENTER );  //ことばの真ん中に設定
     background(255);
-    
-    command(); //　ルールの説明以外のコマンド
-    
-    if (keyPressed) {
-      //print(count);
-      keyPressed();
-    } 
-    if (now==1) {    //一枚目　ルール　勝利条件　操作方法
-      Slide1();
-    } else if (now == 2) {    //二枚目　対戦画面の画像などを用いて　⇒などで説明をする　しんぷるなほう
-      Slide2();
-    } else if (now == 3) {    //三枚目　二枚目と同じ　エクストラカードの説明など　　基本全部画像などで処理
-      Slide3();
-    } else {    
-      now=1;
-      Gameflow="start";
-    }
-  }
-  
-  void keyPressed() {
-    if ((keyPressed == true) && (key == 'a') && now!=1 ) {
-      now-=1;
-    }
-    if ((keyPressed == true) && (key == 'j')&& now!=3 ) {
-      now+=1;
-    }
-    if ((keyPressed == true) && (key == 'm')) {
-      now=0;
-    }
-    delay(200);
-  }
-  
-  void command(){
     textFont(Japanesefont); //今は日本語のフォントを使う
     fill(0);
     textSize(100);
     text("ルール", width/2, height/4-30);
+
     strokeWeight(3);
+
     textSize(100);
     textFont(Englishfont);
     fill(255);
+
     rect(0, height/8, width/4-2, height/8);   //左上のタイトルへの四角
-    rect(width*3/4, 0, width/4-2, height/8);  //右上の→の四角
-    rect(0, 0, width/4-2, height/8);
+    if (now==1) {
+      RectStep(width*3/4, 0, width/4-2, height/8);
+      rect(width*3/4, 0, width/4-2, height/8);  //右上の→の四角
+    } else if (now==2) {
+      RectStep(width*3/4, 0, width/4-2, height/8);
+
+      RectStep(0, 0, width/4-2, height/8);
+    } else if (now==3) {
+      RectStep(0, 0, width/4-2, height/8); //左上の←の四角
+    }
+
     textFont(Japanesefont);
     fill(0);  
     textSize(40);
     text("mでタイトルへ", width*1/8, height*3/16+20);
-
-    text("jを長押し⇨", width*7/8, height/12+5);
-    text("⇦aを長押し", width*1/8, height/12+5);  
-  }
-  
-  void  Slide1() { 
-    text("1/3", width-100, height-5);
-    text("どんな風に遊ぶゲーム？", width/2, height/4+60);
-    fill(255, 0, 0);
-    text("二人プレイの３ターン制カードゲーム", width/2, height/4+80);
-    fill(0);
-
 
 
     if (keyPressed) {
@@ -276,16 +230,12 @@ class Rule {
   void  Slide1() {
     //text("");
   }
-  void  Slide2() { 
-    text("2/3", width-100, height-5);
-    //PImage img = loadImage("player1.jpg");
+  void  Slide2() {
     //  print("ZXCVBN");
   }
-  void  Slide3() { 
-    text("3/3", width-100, height-5);
+  void  Slide3() {
     //  print("WERTYU");
   }
-
   void keyPressed(int count) {
     if ((keyPressed == true) && (key == 'a') && now!=1 && count%15==0) {
       now-=1;
@@ -373,9 +323,7 @@ class HealAction extends ActionCommand {
 class CalcDamage {
   boolean calc_finished = false;
   void display() {
-
     calc();
-
     DrawCharactor(200, 500);
     DrawCharactor(1000, 500);
     DrawHeart(71, 50, player1.lifepoint);
@@ -462,21 +410,14 @@ class CalcDamage {
     line(x+10, y + 50, x+10, y + 100);
   }
   void update() {
-
-    fill(0);
-    calc();
-    text("next turn to press h", width/2, height/2);
-    if (keyPressed && key == 'h') {
-
     
     text("next turn to press h", width/2, height/2);
     if (keyPressed && key == 'h') {
-
+      delay(50);
       Gameflow = "main";
       player1.NextAction = null;
       player2.NextAction = null;
       calc_finished = false;
-
     }
     if ( player1.lifepoint <= 0 || player2.lifepoint <= 0) {
       delay(50);
@@ -491,15 +432,6 @@ class CalcDamage {
     }
   }
 }
-
-// これは多分全体で共有した方がいいかも？
-class MainScreen {
-  void display() {
-    update();
-    //attack
-    textSize(30);
-    fill(255);
-    rect(100, 100, 100, 200);
 
 class MainScreen {
   void display() {
@@ -517,15 +449,7 @@ class MainScreen {
     text("Attack", 213, 140);
     textSize(40);
     fill(0);
-
-    text("Attack", 110, 150);
-    text("a", 110, 350);
-    text("j", 250, 350);
-
-    //deffence
-
     text("3 ~ 7 ダメージ", 213, 270);
-
     fill(255);
     rect(95, 305, 80, 80);
     rect(251, 305, 80, 80);
@@ -534,15 +458,11 @@ class MainScreen {
     text("A", 135, 370);
     text("J", 291, 370);
 
-
-    rect(500, 500, 100, 200);
-
     fill(255, 0, 0);
     quad(20, 420, 386, 420, 406, 580, 40, 580);
     textFont(Japanfont);
     fill(255);
     text("カウンター", 213, 520);
-
 
     fill(0, 0, 255);
     quad(406, 40, 772, 40, 792, 200, 426, 200);
@@ -551,13 +471,6 @@ class MainScreen {
     text("Deffence", 599, 140);
     textSize(40);
     fill(0);
-
-    text("diffence", 510, 150);
-    text("s", 510, 350);
-    text("k", 650, 350);
-
-    //heal
-
     text("攻撃無効化、1回復", 599, 270);
     fill(255);
     rect(481, 305, 80, 80);
@@ -568,15 +481,11 @@ class MainScreen {
     text("K", 677, 370);
 
 
-
-    rect(900, 900, 100, 200);
-
     fill(0, 0, 255);
     quad(406, 420, 772, 420, 792, 580, 426, 580);
     textFont(Japanfont);
     fill(255);
     text("りゅうのいかり", 599, 520);
-
 
     fill(0, 255, 0);
     quad(792, 40, 1158, 40, 1178, 200, 812, 200);
@@ -585,11 +494,6 @@ class MainScreen {
     text("Heal", 985, 140);
     textSize(40);
     fill(0);
-
-    text("Heal", 910, 150);
-    text("d", 910, 350);
-    text("l", 1050, 350);
-
     text("2 ~ 4 回復", 985, 270);
     fill(255);
     rect(867, 305, 80, 80);
