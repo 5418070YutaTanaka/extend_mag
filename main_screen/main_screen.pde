@@ -1,6 +1,5 @@
 class Result {
   void display() {
-    player1.lifepoint = 4;
     if (player1.lifepoint <=0 || player2.lifepoint <= 0) {
       print_ko(player1.lifepoint, player2.lifepoint);
     } else if (player1.lifepoint == player2.lifepoint) {
@@ -41,8 +40,6 @@ class Result {
       text("player2 WIN", width/2, height/2+100);
     }
   }
-
-
   void print_judge(int player1Life, int player2Life) {
     fill(255, 0, 0);
     textSize(100);
@@ -75,8 +72,6 @@ class start {
   private PFont Englishfont;
   private PFont Japanesefont; 
   private boolean player1Ready = false, player2Ready = false;
-  String GameFlow = "start";
-
   private void display() {
     background(255);
     textAlign( CENTER ); //中央揃え
@@ -96,9 +91,9 @@ class start {
 
     textSize(40);
     fill(0);
-    text("スペース　でルール説明", width*7/8-80, height/12);
-    text("a  を押して準備完了", width/4, height*3/4+80);
-    text("j  を押して準備完了", width*3/4, height*3/4+80);
+    text("b        　でルール説明", width*7/8-80, height/12);
+    text("q  を押して準備完了", width/4, height*3/4+80);
+    text("u  を押して準備完了", width*3/4, height*3/4+80);
 
     textFont(Englishfont); 
     textSize(70);
@@ -126,7 +121,7 @@ class start {
     }
 
     if (player1Ready && player2Ready) {
-      delay(50);
+      delay(100);
       Gameflow = "main";
       
       player1Ready = false;
@@ -136,10 +131,10 @@ class start {
 
 
   private void keyPressed() {
-    if (key == 'a') {//キーボードでaを入力をしたら実行される
+    if (key == 'q') {//キーボードでaを入力をしたら実行される
       player1Ready = true;
     }
-    if (key == 'j') {//キーボードでjを入力をしたら実行される
+    if (key == 'u') {//キーボードでjを入力をしたら実行される
       player2Ready = true;
     }
     if (key == 'b') {//キーボードでスペースを入力したら実行される
@@ -157,7 +152,7 @@ class Rule {
   private PFont Japanesefont; 
   //private PImage img = loadImage("photo.jpg"); 画像持ってくるときに使う
   private int now = 1;
-  private int count=0;
+  private int count = 0;
   void display() {
 
     Englishfont = createFont("Arial", 70);//英語
@@ -180,11 +175,11 @@ class Rule {
     if (now==1) {
       RectStep(width*3/4, 0, width/4-2, height/8);
       rect(width*3/4, 0, width/4-2, height/8);  //右上の→の四角
-    } else if (now==2) {
+    } else if (now == 2) {
       RectStep(width*3/4, 0, width/4-2, height/8);
 
       RectStep(0, 0, width/4-2, height/8);
-    } else if (now==3) {
+    } else if (now == 3) {
       RectStep(0, 0, width/4-2, height/8); //左上の←の四角
     }
 
@@ -197,7 +192,7 @@ class Rule {
     if (keyPressed) {
       //print(count);
       keyPressed(count);
-      count+=1;
+      count += 1;
     } 
 
     if (now==1) {    //一枚目　ルール　勝利条件　操作方法
@@ -421,6 +416,8 @@ class CalcDamage {
     }
     if ( player1.lifepoint <= 0 || player2.lifepoint <= 0) {
       delay(50);
+      player1.NextAction = null;
+      player2.NextAction = null;
       Gameflow = "result";
     }
   }
