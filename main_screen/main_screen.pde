@@ -428,9 +428,7 @@ class CalcDamage {
   }
   void calc() {
     if (! calc_finished) {
-      calc_finished = true;
-      player1.NextAction = null;
-      player2.NextAction = null;
+      calc_finished = true;     
       player1.action();
       player2.action();
     }
