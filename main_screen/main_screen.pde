@@ -102,7 +102,7 @@ class start {
     text("スペース　でルール説明", width*7/8-80, height/12);
     text("a  を押して準備完了", width/4, height*3/4+80);
     text("j  を押して準備完了", width*3/4, height*3/4+80);
-
+    println("ss");
     textFont(Englishfont); 
     textSize(70);
     text("player1", width/4, height/2);
