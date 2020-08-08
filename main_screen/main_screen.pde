@@ -303,7 +303,7 @@ class DeffenceAction extends ActionCommand {
     return "DeffenceAction";
   }
   int getPoint() {
-    return -1;
+    return 0;
   }
 }
 class HealAction extends ActionCommand {
@@ -318,6 +318,24 @@ class HealAction extends ActionCommand {
   }
   int getPoint() {
     return HealPoint;
+  }
+}
+class CounterAction extends ActionCommand {
+  public String name = "CounterAction";
+  void Action(Player player){
+    ActionCommand e = player.enemy.NextAction;
+    if ( e.getName() == "AttackAction"){
+      //相手のダメージ分回復
+      player.lifepoint += e.getPoint();
+      //相手のダメージ分ダメージ
+      player.enemy.lifepoint -= e.getPoint();
+    }
+  }
+  String getName(){
+    return "Counter Command";
+  }
+  int getPoint(){
+    return 0;
   }
 }
 class CalcDamage {
@@ -529,6 +547,10 @@ class MainScreen {
         player2.NextAction = new DeffenceAction();
       } else if (key == 'l') {
         player2.NextAction = new HealAction();
+      }else if (key == 'z'){
+        player1.NextAction = new CounterAction();
+      }else if (key == 'm') {
+        player2.NextAction = new CounterAction();
       } else {
         fill(0);
         text("invalid key", width/2, height - 100);
