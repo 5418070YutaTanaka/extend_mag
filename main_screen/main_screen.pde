@@ -254,6 +254,9 @@ class Player {
   Player enemy = null;
   int lifepoint = 10;
   ActionCommand NextAction = null;
+  boolean counter = false;
+  boolean drain = false;
+  boolean dragonRage = false;
   ActionCommand getAction() {
     return NextAction;
   }
@@ -277,7 +280,6 @@ abstract class ActionCommand {
 }
 class AttackAction extends ActionCommand {
   int AttackPoint = int(random(3)) + 4;
-  int priority = 10;
   String getName() {
     return "AttackAction";
   }
@@ -290,12 +292,9 @@ class AttackAction extends ActionCommand {
 }
 class DeffenceAction extends ActionCommand {
   String name = "DeffenceAction";
-  int priority = 30;
   void Action(Player player) {
     if (player.enemy.NextAction.getName() == "AttackAction") {
-      println(player.lifepoint);
       player.lifepoint += player.enemy.NextAction.getPoint();
-      println(player.lifepoint);
     }
     player.lifepoint += 1;
   }
@@ -336,6 +335,37 @@ class CounterAction extends ActionCommand {
   }
   int getPoint(){
     return 0;
+  }
+}
+class DrainAction extends ActionCommand {
+  public String name = "DrainAction";
+  void Action(Player player){
+    ActionCommand e = player.enemy.NextAction;
+    if ( e.getName() == "HealAction"){
+      //相手のダメージ分回復
+      player.lifepoint += e.getPoint();
+      //相手のダメージ分ダメージ
+      player.enemy.lifepoint -= e.getPoint();
+    }
+  }
+  String getName(){
+    return "Drain Command";
+  }
+  int getPoint(){
+    return 0;
+  }
+}
+class DragonRageAction extends ActionCommand {
+  public String name = "DoragonRageAction";
+  int damage = 3;
+  void Action(Player player){
+    player.enemy.lifepoint -= damage;
+  }
+  String getName(){
+    return "DragonRage Command";
+  }
+  int getPoint(){
+    return damage;
   }
 }
 class CalcDamage {
@@ -456,7 +486,6 @@ class CalcDamage {
 class MainScreen {
   void display() {
     update();
-
     textAlign( CENTER ); //中央揃え
     Englishfont = createFont("Arial", 70);//英語
     Japanfont = createFont("Meiryo", 50);//日本語
@@ -469,11 +498,13 @@ class MainScreen {
     text("Attack", 213, 140);
     textSize(40);
     fill(0);
+    textFont(Japanfont);
     text("3 ~ 7 ダメージ", 213, 270);
     fill(255);
     rect(95, 305, 80, 80);
     rect(251, 305, 80, 80);
     fill(0);
+    textFont(Englishfont);
     textSize(70);
     text("A", 135, 370);
     text("J", 291, 370);
@@ -491,11 +522,13 @@ class MainScreen {
     text("Deffence", 599, 140);
     textSize(40);
     fill(0);
+    textFont(Japanfont);
     text("攻撃無効化、1回復", 599, 270);
     fill(255);
     rect(481, 305, 80, 80);
     rect(637, 305, 80, 80);
     fill(0);
+    textFont(Englishfont);
     textSize(70);
     text("S", 521, 370);
     text("K", 677, 370);
@@ -513,12 +546,14 @@ class MainScreen {
     fill(255);
     text("Heal", 985, 140);
     textSize(40);
+    textFont(Japanfont);
     fill(0);
     text("2 ~ 4 回復", 985, 270);
     fill(255);
     rect(867, 305, 80, 80);
     rect(1023, 305, 80, 80);
     fill(0);
+    textFont(Englishfont);
     textSize(70);
     text("D", 907, 370);
     text("L", 1063, 370);
@@ -551,6 +586,14 @@ class MainScreen {
         player1.NextAction = new CounterAction();
       }else if (key == 'm') {
         player2.NextAction = new CounterAction();
+      }else if (key == '.') {
+        player2.NextAction = new DrainAction();
+      }else if (key == 'c'){
+        player1.NextAction = new DrainAction();
+      }else if (key == 'x'){
+        player1.NextAction = new DragonRageAction();
+      }else if (key == ','){
+        player2.NextAction = new DragonRageAction();
       } else {
         fill(0);
         text("invalid key", width/2, height - 100);
