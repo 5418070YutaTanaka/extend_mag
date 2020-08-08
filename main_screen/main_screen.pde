@@ -97,8 +97,8 @@ class start {
     textSize(40);
     fill(0);
     text("スペース　でルール説明", width*7/8-80, height/12);
-    text("a  を押して準備完了", width/4, height*3/4+80);
-    text("j  を押して準備完了", width*3/4, height*3/4+80);
+    text("q  を押して準備完了", width/4, height*3/4+80);
+    text("u  を押して準備完了", width*3/4, height*3/4+80);
 
     textFont(Englishfont); 
     textSize(70);
@@ -136,10 +136,10 @@ class start {
 
 
   private void keyPressed() {
-    if (key == 'a') {//キーボードでaを入力をしたら実行される
+    if (key == 'q') {//キーボードでaを入力をしたら実行される
       player1Ready = true;
     }
-    if (key == 'j') {//キーボードでjを入力をしたら実行される
+    if (key == 'u') {//キーボードでjを入力をしたら実行される
       player2Ready = true;
     }
     if (key == 'b') {//キーボードでスペースを入力したら実行される
@@ -421,12 +421,16 @@ class CalcDamage {
     }
     if ( player1.lifepoint <= 0 || player2.lifepoint <= 0) {
       delay(50);
+      player1.NextAction = null;
+      player2.NextAction = null;
       Gameflow = "result";
     }
   }
   void calc() {
     if (! calc_finished) {
       calc_finished = true;
+      player1.NextAction = null;
+      player2.NextAction = null;
       player1.action();
       player2.action();
     }
