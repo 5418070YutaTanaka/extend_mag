@@ -94,17 +94,9 @@ class start {
 
     textSize(40);
     fill(0);
-<<<<<<< HEAD
     text("b        　でルール説明", width*7/8-80, height/12);
     text("q  を押して準備完了", width/4, height*3/4+80);
     text("u  を押して準備完了", width*3/4, height*3/4+80);
-
-=======
-    text("スペース　でルール説明", width*7/8-80, height/12);
-    text("a  を押して準備完了", width/4, height*3/4+80);
-    text("j  を押して準備完了", width*3/4, height*3/4+80);
-    println("ss");
->>>>>>> 358105b3c0de773a75c87b218f8772a5b7888f9b
     textFont(Englishfont); 
     textSize(70);
     text("player1", width/4, height/2);
@@ -131,10 +123,7 @@ class start {
     }
 
     if (player1Ready && player2Ready) {
-<<<<<<< HEAD
       delay(100);
-=======
->>>>>>> 358105b3c0de773a75c87b218f8772a5b7888f9b
       Gameflow = "main";
       player1Ready = false;
       player2Ready = false;
@@ -163,10 +152,7 @@ class Rule {
   private PFont Japanesefont; 
   //private PImage img = loadImage("photo.jpg"); 画像持ってくるときに使う
   private int now = 1;
-<<<<<<< HEAD
   private int count = 0;
-=======
->>>>>>> 358105b3c0de773a75c87b218f8772a5b7888f9b
   void display() {
     Englishfont = createFont("Arial", 70);//英語
     Japanesefont = createFont("Meiryo", 100);//日本語
@@ -214,22 +200,8 @@ class Rule {
     textFont(Englishfont);
     fill(255);
     rect(0, height/8, width/4-2, height/8);   //左上のタイトルへの四角
-<<<<<<< HEAD
-    if (now==1) {
-      RectStep(width*3/4, 0, width/4-2, height/8);
-      rect(width*3/4, 0, width/4-2, height/8);  //右上の→の四角
-    } else if (now == 2) {
-      RectStep(width*3/4, 0, width/4-2, height/8);
-
-      RectStep(0, 0, width/4-2, height/8);
-    } else if (now == 3) {
-      RectStep(0, 0, width/4-2, height/8); //左上の←の四角
-    }
-
-=======
     rect(width*3/4, 0, width/4-2, height/8);  //右上の→の四角
     rect(0, 0, width/4-2, height/8);
->>>>>>> 358105b3c0de773a75c87b218f8772a5b7888f9b
     textFont(Japanesefont);
     fill(0);  
     textSize(40);
@@ -269,10 +241,6 @@ class Rule {
 
   void RectStep(int x1, int y1, int x2, int y2) {
     rect(x1, y1, x2, y2);
-=======
-    text("jを長押し⇨", width*7/8, height/12+5);
-    text("⇦aを長押し", width*1/8, height/12+5);  
->>>>>>> 358105b3c0de773a75c87b218f8772a5b7888f9b
   }
   
   void  Slide1() { 
@@ -463,15 +431,12 @@ class CalcDamage {
       player2.NextAction = null;
       calc_finished = false;
     }
-<<<<<<< HEAD
     if ( player1.lifepoint <= 0 || player2.lifepoint <= 0) {
       delay(50);
       player1.NextAction = null;
       player2.NextAction = null;
       Gameflow = "result";
     }
-=======
->>>>>>> 358105b3c0de773a75c87b218f8772a5b7888f9b
   }
   void calc() {
     if (! calc_finished) {
