@@ -97,7 +97,7 @@ class start {
 
     textSize(40);
     fill(0);
-    text("スペース　でルール説明", width*7/8-80, height/12);
+    text("r　でルール説明", width*7/8-80, height/12);
     text("q  を押して準備完了", width/4, height*3/4+80);
     text("u  を押して準備完了", width*3/4, height*3/4+80);
 
@@ -143,7 +143,7 @@ class start {
     if (key == 'u') {//キーボードでjを入力をしたら実行される
       player2Ready = true;
     }
-    if (key == 'b') {//キーボードでスペースを入力したら実行される
+    if (key == 'r') {//キーボードでスペースを入力したら実行される
       delay(50);
       Gameflow = "rule";
       
@@ -681,7 +681,7 @@ Result result = new Result();
 //PImage img_player2;
 PFont Japanfont, Englishfont;
 //PImage action;
-String Gameflow = "rule";
+String Gameflow = "start";
 void setup() {
   size(1200, 800);
   player1.setenemy(player2);
