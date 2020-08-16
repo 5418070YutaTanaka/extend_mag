@@ -1,4 +1,4 @@
-class Result {
+class Result extends Screen{
   void display() {
     if (player1.lifepoint <=0 || player2.lifepoint <= 0) {
       print_ko(player1.lifepoint, player2.lifepoint);
@@ -28,7 +28,7 @@ class Result {
     if (keyPressed) {
       if (key == 'b') {
         delay(50);
-        Gameflow = "start";
+        Gameflow.setScreen(new start());
         player1.lifepoint = 10;
         player2.lifepoint = 10;
         delay(5);

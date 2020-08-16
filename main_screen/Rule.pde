@@ -1,4 +1,4 @@
-class Rule {
+class Rule extends Screen{
   private PFont Englishfont;
   private PFont Japanesefont; 
   PImage scene1;
@@ -36,7 +36,7 @@ class Rule {
       Slide5();
     } else {    
       now=1;
-      Gameflow="start";
+      Gameflow.setScreen(new start());
     }
     delay(10);
   }

@@ -1,9 +1,7 @@
-class ResultMove {
+class ResultMove extends Screen{
   int i = 0;
   int j = 0;
   void display() {
-    player1.lifepoint = 4;
-    player2.lifepoint = 7;
     DrawLifePoint(70, 100, i, 1);
     DrawLifePoint(620, 100, j, 2);
     delay(1000);
@@ -14,7 +12,7 @@ class ResultMove {
       j++;
     }
     if (player1.lifepoint == i && player2.lifepoint == j) {
-      Gameflow = "result";
+      Gameflow.setScreen(new Result());
     }
   }
   void DrawLifePoint(int x, int y, int life, int player) {

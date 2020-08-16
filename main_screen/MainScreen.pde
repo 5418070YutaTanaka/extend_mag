@@ -1,4 +1,4 @@
-class MainScreen {
+class MainScreen extends Screen{
   void display() {
     update();
     textAlign( CENTER ); //中央揃え
@@ -86,7 +86,7 @@ class MainScreen {
   void update() {
     if (player1.NextAction != null && player2.NextAction != null) {
       delay(50);
-      Gameflow = "calc_damage";
+      Gameflow.setScreen(new CalcDamage());
     }
     if (keyPressed) {
       if (key == 'a') {

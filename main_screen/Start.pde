@@ -1,4 +1,4 @@
-class start {
+class start extends Screen{
   private PFont Englishfont;
   private PFont Japanesefont; 
   private boolean player1Ready = false, player2Ready = false;
@@ -6,7 +6,7 @@ class start {
   color c1=0;
 
 
-  private void display() {
+  void display() {
     background(255);
     textAlign( CENTER ); //中央揃え
     Englishfont = createFont("Arial", 70);//英語
@@ -57,7 +57,7 @@ class start {
 
     if (player1Ready && player2Ready) {
       delay(50);
-      Gameflow = "main";
+      Gameflow.setScreen(new MainScreen());
       player1Ready = false;
       player2Ready = false;
     }
@@ -73,7 +73,7 @@ class start {
     }
     if (key == 'r') {//キーボードでスペースを入力したら実行される
       delay(50);
-      Gameflow = "rule";
+      Gameflow.setScreen(new Rule());
     }
   }
 }

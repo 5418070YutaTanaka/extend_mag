@@ -1,4 +1,4 @@
-class CalcDamage {
+class CalcDamage extends Screen{
   boolean calc_finished = false;
   void display() {
     calc();
@@ -9,6 +9,7 @@ class CalcDamage {
     DrawHeart(1130, 50, player2.lifepoint);
     DrawLifePoint(620, 100, player2.lifepoint, 2);
     fill(0);
+    text(str(Gameflow.turn + 1) + "ターン目", width/2,100);
     text(player1.NextAction.getName(), width/4, height * 3/4);
     text(player1.NextAction.getPoint(), width/4, height * 3 / 4 + 50);
     text(player2.NextAction.getName(), width * 3/4, height * 3/4);
@@ -91,23 +92,24 @@ class CalcDamage {
     text("next turn to press h", width/2, height/2);
     if (keyPressed && key == 'h') {
       delay(50);
-      Gameflow = "main";
+      Gameflow.setScreen(new MainScreen());
       player1.NextAction = null;
       player2.NextAction = null;
       calc_finished = false;
+      Gameflow.turn += 1;
     }
     if ( player1.lifepoint <= 0 || player2.lifepoint <= 0) {
       delay(50);
       player1.NextAction = null;
       player2.NextAction = null;
-      Gameflow = "result";
+      Gameflow.setScreen(new Result());
     }
     if ( player1.lifepoint <= 0 || player2.lifepoint <= 0) {
-      Gameflow = "result";
-    }/*else if (ターンが３ターンたったら){
+      Gameflow.setScreen(new Result());
+    }else if (Gameflow.turn >= 3){
       delay(50);
-      Gameflow = "result_move";
-    }*/
+      Gameflow.setScreen(new ResultMove());
+    }
   }
   void calc() {
     if (! calc_finished) {
