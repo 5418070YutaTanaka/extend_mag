@@ -1,19 +1,27 @@
 class Result {
   void display() {
-    player1.lifepoint = 4;
     if (player1.lifepoint <=0 || player2.lifepoint <= 0) {
       print_ko(player1.lifepoint, player2.lifepoint);
     } else if (player1.lifepoint == player2.lifepoint) {
+      DrawLifePoint(70, 100, player1.lifepoint, 1);
+      DrawLifePoint(620, 100, player2.lifepoint, 2);
       print_draw(player1.lifepoint, player2.lifepoint);
     } else {
+      DrawLifePoint(70, 100, player1.lifepoint, 1);
+      DrawLifePoint(620, 100, player2.lifepoint, 2);
       print_judge(player1.lifepoint, player2.lifepoint);
     }
+
     fill(255, 0, 0);
     textAlign( CENTER ); //中央揃え
     Englishfont = createFont("Arial", 70);    //英語
     Japanfont = createFont("Meiryo", 100);  //日本語 
     rect(width/2-113, height/2+182, 20, 20);
-    fill(0);
+    if (player1.lifepoint <=0 || player2.lifepoint <= 0) {
+      fill(255);
+    } else {
+      fill(0);
+    }
     textSize(20);
 
     text("b press to back home ", width/2, height/2+height/4) ;
@@ -23,14 +31,36 @@ class Result {
         Gameflow = "start";
         player1.lifepoint = 10;
         player2.lifepoint = 10;
-        
+        delay(5);
+
       }
     }
   }
   void print_ko(int player1Life, int player2Life) {
+    PImage imgK, imgO, imgKO2;
+    imgK = loadImage("K.png");
+    imgO = loadImage("O.png");
+    imgKO2 = loadImage("KO2.png");
+    if (frameCount /3  % 3 == 0) { // frameCount % 2 == 0 だと速すぎ
+      image(imgK, 0, 0, width, height);
+      fill(255, 0, 0);
+      textSize(50);
+      text("KO!", width /4, height/2 - 60);
+    } else if (frameCount /3 % 3 ==1) {
+      image(imgKO2, 0, 0, width, height);
+      fill(255, 0, 0);
+      textSize(150);
+      text("KO!", width* 2/5, height/2 - 60);
+    } else {
+      image(imgO, 0, 0, width, height);
+      fill(255, 0, 0);
+      textSize(300);
+      text("KO!", width/2, height/2-60);
+    }
+    drawstar();
+    drawstar();
+
     fill(255, 0, 0);
-    textSize(300);
-    text("KO!", width/2, height/2-60);
     textSize(200);
     textAlign( CENTER ); //中央揃え
     Englishfont = createFont("Arial", 70);    //英語
@@ -55,8 +85,30 @@ class Result {
 
     if (player1Life > player2Life) {
       text("player1 WIN", width/2, height/2+100);
+      DrawCharactor(200, 700);
+      DrawCharactor(1000, 700);
+      line(980, 730, 970, 760);
+      line(1020, 730, 1030, 760);
+      if (frameCount / 20 % 2 == 0) { // frameCount % 2 == 0 だと速すぎ
+        line(180, 730, 170, 760);
+        line(220, 730, 230, 760);
+      } else {
+        line(180, 730, 170, 700);
+        line(220, 730, 230, 700);
+      }
     } else {
       text("player2 WIN", width/2, height/2+100);
+      DrawCharactor(200, 700);
+      DrawCharactor(1000, 700);
+      line(180, 730, 170, 760);
+      line(220, 730, 230, 760);
+      if (frameCount / 20 % 2 == 0) { // frameCount % 2 == 0 だと速すぎ
+        line(980, 730, 970, 760);
+        line(1020, 730, 1030, 760);
+      } else {
+        line(980, 730, 970, 700);
+        line(1020, 730, 1030, 700);
+      }
     }
   }
   void print_draw(int player1, int player2) {
@@ -70,13 +122,127 @@ class Result {
     textSize(200);
     text("Draw", width/2, height/2+100);
   }
+
+  void DrawCharactor(int x, int y ) {
+    fill(0);
+    ellipse(x, y, 50, 50);
+    rect(x-20, y+30, 40, 60);
+    line(x-10, y + 50, x-10, y + 100);
+    line(x+10, y + 50, x+10, y + 100);
+  }
+  void drawstar() {
+    float delta = TWO_PI /100;
+    float A = 30;
+
+    fill(255, 255, 0);
+    stroke(0);
+    strokeWeight(2);
+    beginShape();
+    for (int j = 0; j < 10; j++) {
+      float i = random(width);
+      float m = random(height);
+      for (float t = 0; t < TWO_PI; t += delta) {
+        vertex((width - i)+ A * pow(cos(t), 3), (height - m) + A * 1.4 * pow(sin(t), 3));
+      }
+      endShape(CLOSE);
+      delay(3);
+    }
+  }
+  void DrawLifePoint(int x, int y, int life, int player) {
+    int rectX = x + 8;
+    int rectY = y + 8;
+    int life2 = 0;
+    fill(255);
+    rect(x, y, 510, 130);
+    stroke(0);
+    if (life >= 10) {
+      life2 = life % 10;
+      life = 10;
+    }
+    if (player == 1) {
+      fill(0, 255, 0);
+      for (int i = 0; i < life; i++) {
+        rect(rectX + 50 * i, rectY, 44, 114);
+      }
+      fill(255, 0, 150);
+      for (int i = 0; i < life2; i++) {
+        rect(rectX + 50 * i, rectY, 44, 114);
+      }
+    }
+    if (player == 2) {
+      rectX += 450;
+      fill(0, 255, 0);
+      for (int i = 0; i < life; i++) {
+        rect(rectX - 50 * i, rectY, 44, 114);
+      }
+      fill(255, 0, 150);
+      for (int i = 0; i < life2; i++) {
+        rect(rectX - 50 * i, rectY, 44, 114);
+      }
+    }
+  }
 }
+class ResultMove {
+  int i = 0;
+  int j = 0;
+  void display() {
+    player1.lifepoint = 4;
+    player2.lifepoint = 7;
+    DrawLifePoint(70, 100, i, 1);
+    DrawLifePoint(620, 100, j, 2);
+    delay(1000);
+    if (player1.lifepoint > i) {
+      i++;
+    }
+    if (player2.lifepoint > j) {
+      j++;
+    }
+    if (player1.lifepoint == i && player2.lifepoint == j) {
+      Gameflow = "result";
+    }
+  }
+  void DrawLifePoint(int x, int y, int life, int player) {
+    int rectX = x + 8;
+    int rectY = y + 8;
+    int life2 = 0;
+    fill(255);
+    rect(x, y, 510, 130);
+    stroke(0);
+    if (life >= 10) {
+      life2 = life % 10;
+      life = 10;
+    }
+    if (player == 1) {
+      fill(0, 255, 0);
+      for (int i = 0; i < life; i++) {
+        rect(rectX + 50 * i, rectY, 44, 114);
+      }
+      fill(255, 0, 150);
+      for (int i = 0; i < life2; i++) {
+        rect(rectX + 50 * i, rectY, 44, 114);
+      }
+    }
+    if (player == 2) {
+      rectX += 450;
+      fill(0, 255, 0);
+      for (int i = 0; i < life; i++) {
+        rect(rectX - 50 * i, rectY, 44, 114);
+      }
+      fill(255, 0, 150);
+      for (int i = 0; i < life2; i++) {
+        rect(rectX - 50 * i, rectY, 44, 114);
+      }
+    }
+  }
+}
+
 class start {
   private PFont Englishfont;
   private PFont Japanesefont; 
   private boolean player1Ready = false, player2Ready = false;
   String GameFlow = "start";
   color c1=0;
+
 
   private void display() {
     background(255);
@@ -97,6 +263,7 @@ class start {
 
     textSize(40);
     fill(0);
+
     text("r　でルール説明", width*7/8-80, height/12);
     text("q  を押して準備完了", width/4, height*3/4+80);
     text("u  を押して準備完了", width*3/4, height*3/4+80);
@@ -129,7 +296,6 @@ class start {
     if (player1Ready && player2Ready) {
       delay(50);
       Gameflow = "main";
-      
       player1Ready = false;
       player2Ready = false;
     }
@@ -146,7 +312,6 @@ class start {
     if (key == 'r') {//キーボードでスペースを入力したら実行される
       delay(50);
       Gameflow = "rule";
-      
     }
   }
 }
@@ -224,6 +389,7 @@ class Rule {
     fill(0);  
     textSize(40);
     text("mでタイトルへ", width*1/8, height*3/16+20);
+
     text("jを長押し⇨", width*7/8, height/12+5);
     text("⇦aを長押し", width*1/8, height/12+5);  
   }
@@ -315,8 +481,6 @@ class Rule {
     //写真を入れる
   }
 }
-  
-  
 
 
 class Player {
@@ -372,6 +536,7 @@ class DeffenceAction extends ActionCommand {
   }
   int getPoint() {
     return 0;
+
   }
 }
 class HealAction extends ActionCommand {
@@ -388,6 +553,7 @@ class HealAction extends ActionCommand {
     return HealPoint;
   }
 }
+
 class CounterAction extends ActionCommand {
   public String name = "CounterAction";
   void Action(Player player){
@@ -527,7 +693,6 @@ class CalcDamage {
     line(x+10, y + 50, x+10, y + 100);
   }
   void update() {
-    
     text("next turn to press h", width/2, height/2);
     if (keyPressed && key == 'h') {
       delay(50);
@@ -542,6 +707,12 @@ class CalcDamage {
       player2.NextAction = null;
       Gameflow = "result";
     }
+    if ( player1.lifepoint <= 0 || player2.lifepoint <= 0) {
+      Gameflow = "result";
+    }/*else if (ターンが３ターンたったら){
+      delay(50);
+      Gameflow = "result_move";
+    }*/
   }
   void calc() {
     if (! calc_finished) {
@@ -615,14 +786,18 @@ class MainScreen {
     fill(255);
     text("Heal", 985, 140);
     textSize(40);
+
     textFont(Japanfont);
+
     fill(0);
     text("2 ~ 4 回復", 985, 270);
     fill(255);
     rect(867, 305, 80, 80);
     rect(1023, 305, 80, 80);
     fill(0);
+
     textFont(Englishfont);
+
     textSize(70);
     text("D", 907, 370);
     text("L", 1063, 370);
@@ -651,6 +826,7 @@ class MainScreen {
         player2.NextAction = new DeffenceAction();
       } else if (key == 'l') {
         player2.NextAction = new HealAction();
+
       }else if (key == 'z'){
         player1.NextAction = new CounterAction();
       }else if (key == 'm') {
@@ -677,6 +853,8 @@ CalcDamage calcdamage = new CalcDamage();
 Player player1 = new Player();
 Player player2 = new Player();
 Result result = new Result();
+ResultMove result_move = new ResultMove();
+
 //PImage img_player1;
 //PImage img_player2;
 PFont Japanfont, Englishfont;
@@ -697,6 +875,9 @@ void draw() {
     main.display();
   } else if (Gameflow == "calc_damage") {
     calcdamage.display();
+  } else if (Gameflow == "result_move") {
+    result_move.display();
+
   } else if (Gameflow == "result") {
     result.display();
   }
