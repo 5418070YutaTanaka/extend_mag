@@ -21,14 +21,28 @@ class MainScreen extends Screen{
     fill(0);
     textFont(Englishfont);
     textSize(70);
-    text("A", 135, 370);
-    text("J", 291, 370);
+    text("a", 135, 370);
+    text("j", 291, 370);
 
     fill(255, 0, 0);
     quad(20, 420, 386, 420, 406, 580, 40, 580);
     textFont(Japanfont);
     fill(255);
     text("カウンター", 213, 520);
+    rect(95, 600, 80, 80);
+    rect(251, 600, 80, 80);
+    fill(0);
+    textSize(70);
+    text("m", 291, 665);
+    text("z", 135, 665);
+    if (player1.counter){ 
+      rect(95, 600, 80, 80);
+    }
+    
+    if (player2.counter){
+      rect(251, 600, 80, 80);
+    }
+    
 
     fill(0, 0, 255);
     quad(406, 40, 772, 40, 792, 200, 426, 200);
@@ -45,8 +59,8 @@ class MainScreen extends Screen{
     fill(0);
     textFont(Englishfont);
     textSize(70);
-    text("S", 521, 370);
-    text("K", 677, 370);
+    text("s", 521, 370);
+    text("k", 677, 370);
 
 
     fill(0, 0, 255);
@@ -54,7 +68,22 @@ class MainScreen extends Screen{
     textFont(Japanfont);
     fill(255);
     text("りゅうのいかり", 599, 520);
-
+    rect(481, 600, 80, 80);
+    rect(637, 600, 80, 80);
+    fill(0);
+    textSize(70);
+    text(",", 677, 665);
+    text("x", 521, 665);
+    
+    if (player1.dragonRage){ 
+      rect(481, 600, 80, 80);
+    }
+    if (player2.dragonRage){
+      rect(637, 600, 80, 80);
+    }
+    
+    
+    
     fill(0, 255, 0);
     quad(792, 40, 1158, 40, 1178, 200, 812, 200);
     textFont(Englishfont);
@@ -74,14 +103,41 @@ class MainScreen extends Screen{
     textFont(Englishfont);
 
     textSize(70);
-    text("D", 907, 370);
-    text("L", 1063, 370);
+    text("d", 907, 370);
+    text("l", 1063, 370);
 
     fill(0, 255, 0);
     quad(792, 420, 1158, 420, 1178, 580, 812, 580);
     textFont(Japanfont);
     fill(255);
     text("ドレイン", 985, 520);
+    rect(867, 600, 80, 80);
+    rect(1023, 600, 80, 80);
+    fill(0);
+    textSize(70);
+    text("c", 907, 665);
+    text(".", 1063, 665);
+    textSize(40);
+    fill(0);
+    
+    if (player1.drain){ 
+      rect(867, 600, 80, 80);
+    }
+    
+    if (player2.drain){
+      rect(1023, 600, 80, 80);
+    }
+    
+    if ( player1.NextAction == null){
+      text("player1:wait", width - 1000, 750);
+    }else{
+      text("player1:ready", width - 1000, 750);
+    }
+    if ( player2.NextAction == null){
+      text("player2:wait", width - 300, 750);
+    }else{
+      text("player1:ready", width - 300, 750);
+    }
   }
   void update() {
     if (player1.NextAction != null && player2.NextAction != null) {
@@ -101,18 +157,17 @@ class MainScreen extends Screen{
         player2.NextAction = new DeffenceAction();
       } else if (key == 'l') {
         player2.NextAction = new HealAction();
-
-      }else if (key == 'z'){
+      }else if (key == 'z' && (! player1.counter)){
         player1.NextAction = new CounterAction();
-      }else if (key == 'm') {
+      }else if (key == 'm' && (! player2.counter)) {
         player2.NextAction = new CounterAction();
-      }else if (key == '.') {
+      }else if (key == '.' && (! player2.drain)) {
         player2.NextAction = new DrainAction();
-      }else if (key == 'c'){
+      }else if (key == 'c' && (! player1.drain)){
         player1.NextAction = new DrainAction();
-      }else if (key == 'x'){
+      }else if (key == 'x' && (! player1.dragonRage)){
         player1.NextAction = new DragonRageAction();
-      }else if (key == ','){
+      }else if (key == ',' && (! player2.dragonRage)){
         player2.NextAction = new DragonRageAction();
       } else {
         fill(0);

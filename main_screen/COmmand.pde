@@ -55,6 +55,7 @@ class CounterAction extends ActionCommand {
   public String name = "CounterAction";
   void Action(Player player){
     ActionCommand e = player.enemy.NextAction;
+    player.counter = true;
     if ( e.getName() == "AttackAction"){
       //相手のダメージ分回復
       player.lifepoint += e.getPoint();
@@ -73,6 +74,7 @@ class DrainAction extends ActionCommand {
   public String name = "DrainAction";
   void Action(Player player){
     ActionCommand e = player.enemy.NextAction;
+    player.drain = true;
     if ( e.getName() == "HealAction"){
       //相手のダメージ分回復
       player.lifepoint += e.getPoint();
@@ -91,6 +93,7 @@ class DragonRageAction extends ActionCommand {
   public String name = "DoragonRageAction";
   int damage = 3;
   void Action(Player player){
+    player.dragonRage = true;
     player.enemy.lifepoint -= damage;
   }
   String getName(){
