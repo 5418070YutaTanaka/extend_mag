@@ -1,3 +1,4 @@
+
 start s = new start();
 MainScreen main = new MainScreen();
 Rule rule = new Rule();

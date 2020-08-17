@@ -10,8 +10,7 @@ class Result extends Screen{
       DrawLifePoint(70, 100, player1.lifepoint, 1);
       DrawLifePoint(620, 100, player2.lifepoint, 2);
       print_judge(player1.lifepoint, player2.lifepoint);
-    }
-
+    } 
     fill(255, 0, 0);
     textAlign( CENTER ); //中央揃え
     Englishfont = createFont("Arial", 70);    //英語
@@ -23,7 +22,6 @@ class Result extends Screen{
       fill(0);
     }
     textSize(20);
-
     text("b press to back home ", width/2, height/2+height/4) ;
     if (keyPressed) {
       if (key == 'b') {
