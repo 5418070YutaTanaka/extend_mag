@@ -35,11 +35,11 @@ class MainScreen extends Screen{
     textSize(70);
     text("m", 291, 665);
     text("z", 135, 665);
-    if (player1.counter){ 
+    if (player1.extra){ 
       rect(95, 600, 80, 80);
     }
     
-    if (player2.counter){
+    if (player2.extra){
       rect(251, 600, 80, 80);
     }
     
@@ -75,10 +75,10 @@ class MainScreen extends Screen{
     text(",", 677, 665);
     text("x", 521, 665);
     
-    if (player1.dragonRage){ 
+    if (player1.extra){ 
       rect(481, 600, 80, 80);
     }
-    if (player2.dragonRage){
+    if (player2.extra){
       rect(637, 600, 80, 80);
     }
     
@@ -120,11 +120,11 @@ class MainScreen extends Screen{
     textSize(40);
     fill(0);
     
-    if (player1.drain){ 
+    if (player1.extra){ 
       rect(867, 600, 80, 80);
     }
     
-    if (player2.drain){
+    if (player2.extra){
       rect(1023, 600, 80, 80);
     }
     
@@ -157,17 +157,17 @@ class MainScreen extends Screen{
         player2.NextAction = new DeffenceAction();
       } else if (key == 'l') {
         player2.NextAction = new HealAction();
-      }else if (key == 'z' && (! player1.counter)){
+      }else if (key == 'z' && (! player1.extra)){
         player1.NextAction = new CounterAction();
-      }else if (key == 'm' && (! player2.counter)) {
+      }else if (key == 'm' && (! player2.extra)) {
         player2.NextAction = new CounterAction();
-      }else if (key == '.' && (! player2.drain)) {
+      }else if (key == '.' && (! player2.extra)) {
         player2.NextAction = new DrainAction();
-      }else if (key == 'c' && (! player1.drain)){
+      }else if (key == 'c' && (! player1.extra)){
         player1.NextAction = new DrainAction();
-      }else if (key == 'x' && (! player1.dragonRage)){
+      }else if (key == 'x' && (! player1.extra)){
         player1.NextAction = new DragonRageAction();
-      }else if (key == ',' && (! player2.dragonRage)){
+      }else if (key == ',' && (! player2.extra)){
         player2.NextAction = new DragonRageAction();
       } else {
         fill(0);
