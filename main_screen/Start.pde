@@ -4,10 +4,13 @@ class start extends Screen{
   private boolean player1Ready = false, player2Ready = false;
   String GameFlow = "start";
   color c1=0;
-
-
+  String HealorDamage="A";
+  
   void display() {
     background(255);
+    
+    PImage title;
+    title = loadImage("title.png");
     textAlign( CENTER ); //中央揃え
     Englishfont = createFont("Arial", 70);//英語
     Japanesefont = createFont("Meiryo", 100);//日本語
@@ -15,8 +18,7 @@ class start extends Screen{
     textFont(Japanesefont);
     fill(0);
     textSize(100);
-    text("ゲームタイトル", width/2, height/4+30);
-
+    image(title, 200, height/4 - 100, 800, 200);
     fill(255);
     strokeWeight(3);
     rect(width/16+25, height*3/4+42, 50, 50);
