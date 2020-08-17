@@ -53,13 +53,20 @@ class CalcDamage extends Screen{
     int rectX = x + 8;
     int rectY = y + 8;
     int life2 = 0;
+    int life3 = 0;
     fill(255);
     rect(x, y, 510, 130);
     stroke(0);
-    if (life >= 10) {
+    
+    if (life >= 20) {
+      life3 = life % 10;
+      life = 10;
+      life2 = 10;
+    } else if(life >= 10){
       life2 = life % 10;
       life = 10;
     }
+    
     if (player == 1) {
       fill(0, 255, 0);
       for (int i = 0; i < life; i++) {
@@ -67,6 +74,10 @@ class CalcDamage extends Screen{
       }
       fill(255, 0, 150);
       for (int i = 0; i < life2; i++) {
+        rect(rectX + 50 * i, rectY, 44, 114);
+      }
+      fill(255, 153, 0);
+      for (int i = 0; i < life3; i++) {
         rect(rectX + 50 * i, rectY, 44, 114);
       }
     }
@@ -78,6 +89,10 @@ class CalcDamage extends Screen{
       }
       fill(255, 0, 150);
       for (int i = 0; i < life2; i++) {
+        rect(rectX - 50 * i, rectY, 44, 114);
+      }
+      fill(255, 153, 0);
+      for (int i = 0; i < life3; i++) {
         rect(rectX - 50 * i, rectY, 44, 114);
       }
     }

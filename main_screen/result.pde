@@ -27,11 +27,14 @@ class Result extends Screen{
     text("b press to back home ", width/2, height/2+height/4) ;
     if (keyPressed) {
       if (key == 'b') {
-        delay(50);
+        
+        Gameflow = new GameFlow();
         Gameflow.setScreen(new start());
-        player1.lifepoint = 10;
-        player2.lifepoint = 10;
-        delay(5);
+        player1 = new Player();
+        player2 = new Player();
+        player1.setenemy(player2);
+        player2.setenemy(player1);
+        delay(50);
 
       }
     }

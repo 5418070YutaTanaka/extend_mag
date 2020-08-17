@@ -16,7 +16,15 @@ class MainScreen extends Screen{
     textFont(Japanfont);
     text("3 ~ 7 ダメージ", 213, 270);
     fill(255);
+    if (player1.NextAction != null){
+      fill(255,255,0);
+    }
     rect(95, 305, 80, 80);
+    fill(255);
+    if (player2.NextAction != null){
+      fill(255,255,0);
+    }
+    
     rect(251, 305, 80, 80);
     fill(0);
     textFont(Englishfont);
@@ -29,7 +37,15 @@ class MainScreen extends Screen{
     textFont(Japanfont);
     fill(255);
     text("カウンター", 213, 520);
+    if (player1.NextAction != null){
+      fill(255,255,0);
+    }
     rect(95, 600, 80, 80);
+    fill(255);
+    if (player2.NextAction != null){
+      fill(255,255,0);
+    }
+    
     rect(251, 600, 80, 80);
     fill(0);
     textSize(70);
@@ -54,7 +70,15 @@ class MainScreen extends Screen{
     textFont(Japanfont);
     text("攻撃無効化、1回復", 599, 270);
     fill(255);
+    if (player1.NextAction != null){
+      fill(255,255,0);
+    }
     rect(481, 305, 80, 80);
+    fill(255);
+    if (player2.NextAction != null){
+      fill(255,255,0);
+    }
+    
     rect(637, 305, 80, 80);
     fill(0);
     textFont(Englishfont);
@@ -68,7 +92,15 @@ class MainScreen extends Screen{
     textFont(Japanfont);
     fill(255);
     text("りゅうのいかり", 599, 520);
+    if (player1.NextAction != null){
+      fill(255,255,0);
+    }
     rect(481, 600, 80, 80);
+    fill(255);
+    if (player2.NextAction != null){
+      fill(255,255,0);
+    }
+    
     rect(637, 600, 80, 80);
     fill(0);
     textSize(70);
@@ -96,7 +128,15 @@ class MainScreen extends Screen{
     fill(0);
     text("2 ~ 4 回復", 985, 270);
     fill(255);
+    if (player1.NextAction != null){
+      fill(255,255,0);
+    }
     rect(867, 305, 80, 80);
+    fill(255);
+    if (player2.NextAction != null){
+      fill(255,255,0);
+    }
+    
     rect(1023, 305, 80, 80);
     fill(0);
 
@@ -111,7 +151,14 @@ class MainScreen extends Screen{
     textFont(Japanfont);
     fill(255);
     text("ドレイン", 985, 520);
+    if (player1.NextAction != null){
+      fill(255,255,0);
+    }
     rect(867, 600, 80, 80);
+    fill(255);
+    if (player2.NextAction != null){
+      fill(255,255,0);
+    }
     rect(1023, 600, 80, 80);
     fill(0);
     textSize(70);
