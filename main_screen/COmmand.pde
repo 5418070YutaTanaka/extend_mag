@@ -37,7 +37,7 @@ class DeffenceAction extends ActionCommand {
   }
 }
 class HealAction extends ActionCommand {
-  int HealPoint = int(random(3)) + 2;
+  int HealPoint = int(random(3)) + 3;
   int priority = 50;
   public String name = "HealAction";
   void Action(Player player) {
@@ -91,7 +91,7 @@ class DrainAction extends ActionCommand {
 }
 class DragonRageAction extends ActionCommand {
   public String name = "DoragonRageAction";
-  int damage = 3;
+  int damage = 4;
   void Action(Player player){
     player.extra = true;
     player.enemy.lifepoint -= damage;

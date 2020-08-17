@@ -97,17 +97,18 @@ class MainScreen extends Screen {
     textFont(Japanfont);
 
     textSize(37);
-    text("固定3ダメージ", 599, 650);
+    text("固定4ダメージ", 599, 650);
 
     fill(255);
     if (player1.NextAction != null){
       fill(255,255,0);
     }
+    rect(481, 700, 80, 80);
     fill(255);
     if (player2.NextAction != null){
       fill(255,255,0);
     }
-    rect(481, 700, 80, 80);
+    
     rect(637, 700, 80, 80);
     fill(0);
     textSize(70);
@@ -121,14 +122,12 @@ class MainScreen extends Screen {
       rect(637, 700, 80, 80);
     }
 
-
-
     Heal();
 
     fill(0);
     textFont(Japanfont);
     textSize(37);
-    text("2 ~ 4 回復", 985, 270);
+    text("3 ~ 5 回復", 985, 270);
     fill(255);
     if (player1.NextAction != null){
       fill(255,255,0);

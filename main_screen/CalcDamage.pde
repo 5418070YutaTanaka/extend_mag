@@ -124,7 +124,7 @@ class CalcDamage extends Screen {
     }
     if ( player1.lifepoint <= 0 || player2.lifepoint <= 0) {
       Gameflow.setScreen(new Result());
-    } else if (Gameflow.turn >= 3) {
+    } else if (Gameflow.turn >= 5) {
       delay(50);
       Gameflow.setScreen(new ResultMove());
     }
