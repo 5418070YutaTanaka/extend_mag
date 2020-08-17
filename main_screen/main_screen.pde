@@ -15,6 +15,8 @@ GameFlow Gameflow = new GameFlow();
 PFont Japanfont, Englishfont;
 //PImage action;
 void setup() {
+  minim = new Minim(this);  //初期化
+  player = minim.loadFile("KO.mp3");  
   size(1200, 800);
   player1.setenemy(player2);
   player2.setenemy(player1);
