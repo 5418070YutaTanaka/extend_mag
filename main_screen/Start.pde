@@ -21,12 +21,12 @@ class start extends Screen{
     strokeWeight(3);
     rect(width/16+25, height*3/4+42, 50, 50);
     rect(width*9/16+25, height*3/4+42, 50, 50);
-    rect(width*5/8-19, 15, 200, 70);
+    rect(width*5/8 + 45, 25, 50, 50);
 
     textSize(40);
     fill(0);
 
-    text("r　でルール説明", width*7/8-80, height/12);
+    text("r　 でルール説明", width*7/8-80, height/12);
     text("q  を押して準備完了", width/4, height*3/4+80);
     text("u  を押して準備完了", width*3/4, height*3/4+80);
 
