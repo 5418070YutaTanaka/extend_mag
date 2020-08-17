@@ -4,7 +4,7 @@ class ResultMove extends Screen{
   void display() {
     DrawLifePoint(70, 100, i, 1);
     DrawLifePoint(620, 100, j, 2);
-    delay(1000);
+    delay(600);
     if (player1.lifepoint > i) {
       i++;
     }

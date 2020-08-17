@@ -1,3 +1,7 @@
+import ddf.minim.*;  //minimライブラリのインポート
+
+Minim minim;  //Minim型変数であるminimの宣言
+AudioPlayer player;  //サウンドデータ格納用の変数
 
 start s = new start();
 MainScreen main = new MainScreen();
@@ -11,6 +15,8 @@ GameFlow Gameflow = new GameFlow();
 PFont Japanfont, Englishfont;
 //PImage action;
 void setup() {
+  minim = new Minim(this);  //初期化
+  player = minim.loadFile("KO.mp3");  
   size(1200, 800);
   player1.setenemy(player2);
   player2.setenemy(player1);

@@ -1,7 +1,15 @@
-class Result extends Screen{
+class Result extends Screen {
+  int ko=0;
   void display() {
+
     if (player1.lifepoint <=0 || player2.lifepoint <= 0) {
+
       print_ko(player1.lifepoint, player2.lifepoint);
+      if (ko==0) {
+        player.play();  //再生
+        player.rewind();  //再生が終わったら巻き戻しておく
+      }
+      ko+=1;
     } else if (player1.lifepoint == player2.lifepoint) {
       DrawLifePoint(70, 100, player1.lifepoint, 1);
       DrawLifePoint(620, 100, player2.lifepoint, 2);
@@ -25,7 +33,7 @@ class Result extends Screen{
     text("b press to back home ", width/2, height/2+height/4) ;
     if (keyPressed) {
       if (key == 'b') {
-        
+        ko=0;
         Gameflow = new GameFlow();
         Gameflow.setScreen(new start());
         player1 = new Player();
@@ -33,10 +41,11 @@ class Result extends Screen{
         player1.setenemy(player2);
         player2.setenemy(player1);
         delay(50);
-
       }
     }
   }
+
+
   void print_ko(int player1Life, int player2Life) {
     PImage imgK, imgO, imgKO2;
     imgK = loadImage("K.png");
