@@ -78,12 +78,12 @@ class Rule extends Screen{
     text("1/5", width-100, height-5);
     text("どんな風に遊ぶゲーム？", width/2, height/4+60);
     textSize(60);
-    text("二人プレイの３ターン制カードゲーム", width/2, height/4+60+(540/7*1));
+    text("二人プレイの5ターン制カードゲーム", width/2, height/4+60+(540/7*1));
     textSize(40);
     text("勝利条件", width/2, height/4+60+(540/7*3));
     textSize(60);
     text("相手の体力を0以下にする", width/2, height/4+60+(540/7*4));
-    text("3ターン経過後、相手より体力が多い", width/2, height/4+60+(540/7*5));
+    text("5ターン経過後、相手より体力が多い", width/2, height/4+60+(540/7*5));
     
   }
   void  Slide2() { 
@@ -96,7 +96,7 @@ class Rule extends Screen{
     textAlign( LEFT );  //ことばの真ん中に設定
     text("3～7のダメージ", width/5*3, height/4+60+(540/7*2));
     text("ダメージ無効＆1回復", width/5*3, height/4+60+(540/7*4));
-    text("2～4回復", width/5*3, height/4+60+(540/7*6));
+    text("3～5回復", width/5*3, height/4+60+(540/7*6));
     fill(255,0,0);
     text("Attack", width/4*2+20, height/4+60+(540/7*1));
     fill(0,0,255);
@@ -116,7 +116,7 @@ class Rule extends Screen{
     text("相手のAttack使用時、", width/5*3, height/4+60+(540/14*3)+15);
     text("Attaack無効＆3～7ダメージ", width/5*3, height/4+60+(540/14*4)+15);
     text("相手のDeffence使用時、", width/5*3, height/4+60+(540/14*7)+15);
-    text("Deffence無効＆固定３ダメージ", width/5*3, height/4+60+(540/14*8)+15);
+    text("Deffence無効＆固定4ダメージ", width/5*3, height/4+60+(540/14*8)+15);
     text("相手のHeal使用時、", width/5*3, height/4+60+(540/14*11)+15);
     text("Heal無効＆相手の回復分回復", width/5*3, height/4+60+(540/14*12)+15);
     fill(255,0,0);
